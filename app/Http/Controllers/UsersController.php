@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
 use App\Models\users;
@@ -20,7 +21,14 @@ class UsersController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+        $validator = Validator::make($request->all(), ['email' => 'required|email']);
+        if ($validator->fails()) {
+            return redirect()->route('users.create')
+                        ->withErrors($validator)
+                        ->withInput()
+                        ->with('error', 'Введите корректный email');
+        }
         users::create($request->all());
         return redirect()->route('users.index');
     }

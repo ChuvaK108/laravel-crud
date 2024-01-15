@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,8 @@ use App\Http\Controllers\UsersController;
 |
 */
 Route::resource('users', UsersController::class);
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () 
+        {
+            return view('welcome');
+        });
+Route::get('/users/{user}/products', [ProductsController::class, 'index'])->name('user.products.index');
